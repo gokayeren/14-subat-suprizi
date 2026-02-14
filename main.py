@@ -6,7 +6,7 @@ import time
 st.set_page_config(page_title="Love Jackpot 🎰", page_icon="❤️")
 
 st.header("🎰 Şansını Dene Sevgilim!")
-st.write("Bakalım bugün şansın yaver gidecek mi? 3 Kalbi yan yana bulursan büyük ödül senin!")
+st.write("3 Kalbi yan yana bulursan büyük ödül senin Selin!")
 
 # Slot makinesindeki emojiler
 emojis = ['🍒', '🍋', '🍇', '💎', '7️⃣', '❤️']
@@ -29,7 +29,7 @@ if st.session_state.spin_count == 0:
     empty3.header("❓")
 
 # Çevir Butonu
-spin_btn = st.button("Kolu Çevir! 🕹️")
+spin_btn = st.button("BAŞLA! 🕹️")
 
 if spin_btn:
     st.session_state.spin_count += 1
@@ -60,9 +60,9 @@ if spin_btn:
     # Sonuç Mesajları
     if st.session_state.jackpot:
         st.balloons() # Konfetiler patlasın!
-        st.success("🎉 TEBRİKLER! BÜYÜK ÖDÜLÜ KAZANDIN! 🎉")
+        st.success("🎉 Tebrikler Selin! ÖDÜLÜ KAZANDIN! 🎉")
         st.write("### 🎁 Ödülün:")
-        st.info("Bu hafta sonu istediğin yere gidiyoruz / İstediğin o şeyi alıyoruz! (Ekran görüntüsünü al ve bana at)")
+        st.info("İstediğin tarihte istediğin bir etkilik hakkı kazandın Selin aşkım! Bitanesin :)")
         
         # Oyunu sıfırlama butonu
         if st.button("Tekrar Oyna"):
@@ -72,12 +72,12 @@ if spin_btn:
             
     else:
         messages = [
-            "Az kaldı, tekrar dene!",
-            "Makine ısınmaya başladı...",
-            "Şansın dönmek üzere, pes etme!",
-            "Benim aşkım kadar büyük bir ikramiye bu, kolay çıkmaz :)"
+            "Az kaldı canım, tekrar dene!",
+            "Bir kez daha dene bebeğim...",
+            "Pes etme bitanem, olucak :)",
+            "Benim aşkım kadar büyük bir ikramiye bu, son kez dene!"
         ]
         st.warning(random.choice(messages))
 
 st.write("---")
-st.caption("Powered by Your Python Developer Boyfriend 🐍")
+st.caption("Yazılımcı sevgilinden kalplerle yapıldı 🐍")
