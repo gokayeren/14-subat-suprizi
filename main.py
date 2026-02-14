@@ -80,4 +80,4 @@ if spin_btn:
         st.warning(random.choice(messages))
 
 st.write("---")
-st.caption("Yazılımcı sevgilinden kalplerle yapıldı 🐍")
+st.caption("Sevgilin kalplerle yaptı 🐍")
