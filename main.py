@@ -1,39 +1,83 @@
 import streamlit as st
-import numpy as np
-import matplotlib.pyplot as plt
+import random
+import time
 
-# Sayfa ayarları (Başlık ve ikon)
-st.set_page_config(page_title="Sana Özel Bir Denklem", page_icon="❤️", layout="centered")
+# Sayfa Ayarları
+st.set_page_config(page_title="Love Jackpot 🎰", page_icon="❤️")
 
-# Başlık ve Açıklama
-st.title("❤️ Sevgililer Günün Kutlu Olsun!")
-st.write("Sözel ifadeler bazen yetersiz kalıyor, ben de hislerimi matematikle anlatmak istedim.")
+st.header("🎰 Şansını Dene Sevgilim!")
+st.write("Bakalım bugün şansın yaver gidecek mi? 3 Kalbi yan yana bulursan büyük ödül senin!")
 
-# Kalp çizim fonksiyonu
-def draw_heart():
-    t = np.linspace(0, 2 * np.pi, 1000)
-    x = 16 * np.sin(t)**3
-    y = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)
+# Slot makinesindeki emojiler
+emojis = ['🍒', '🍋', '🍇', '💎', '7️⃣', '❤️']
 
-    fig, ax = plt.subplots(figsize=(6,6))
+# Session state kullanarak durumu takip edelim (kazandı mı, kaç kere denedi vs.)
+if 'spin_count' not in st.session_state:
+    st.session_state.spin_count = 0
+if 'jackpot' not in st.session_state:
+    st.session_state.jackpot = False
+
+col1, col2, col3 = st.columns(3)
+empty1 = col1.empty()
+empty2 = col2.empty()
+empty3 = col3.empty()
+
+# Başlangıç görüntüsü
+if st.session_state.spin_count == 0:
+    empty1.header("❓")
+    empty2.header("❓")
+    empty3.header("❓")
+
+# Çevir Butonu
+spin_btn = st.button("Kolu Çevir! 🕹️")
+
+if spin_btn:
+    st.session_state.spin_count += 1
     
-    # Arka planı şeffaf yapalım ki sitenin temasına uysun
-    fig.patch.set_alpha(0)
-    ax.patch.set_alpha(0)
-    
-    # Kalbi çiz ve içini doldur
-    ax.plot(x, y, color='#ff4b4b', linewidth=3) # Streamlit kırmızısı
-    ax.fill(x, y, color='#ff4b4b', alpha=0.3)
-    
-    ax.axis('off') # Eksenleri ve sayıları gizle
-    return fig
+    # Animasyon efekti (sayılar hızlıca değişiyor gibi görünsün)
+    for i in range(15):
+        empty1.header(random.choice(emojis))
+        empty2.header(random.choice(emojis))
+        empty3.header(random.choice(emojis))
+        time.sleep(0.05) # Dönme hızı
 
-# Çizimi ekrana bas
-st.pyplot(draw_heart())
+    # --- HİLE KISMI BAŞLIYOR ---
+    # 3. denemede veya %30 şansla kesin kazansın (bunu değiştirebilirsin)
+    if st.session_state.spin_count >= 3 or random.random() < 0.3:
+        result = ['❤️', '❤️', '❤️']
+        st.session_state.jackpot = True
+    else:
+        # Kazanmadıysa rastgele üret ama hepsi kalp olmasın
+        result = [random.choice(emojis) for _ in range(3)]
+        while result == ['❤️', '❤️', '❤️']: # Tesadüfen kazanırsa boz
+            result = [random.choice(emojis) for _ in range(3)]
+            
+    # Sonucu ekrana bas
+    empty1.header(result[0])
+    empty2.header(result[1])
+    empty3.header(result[2])
 
-# Altına formülü ve notu ekle
-st.markdown("---")
-st.subheader("Bu kalbin formülü:")
-st.code("x = 16sin³(t)\ny = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)", language="python")
+    # Sonuç Mesajları
+    if st.session_state.jackpot:
+        st.balloons() # Konfetiler patlasın!
+        st.success("🎉 TEBRİKLER! BÜYÜK ÖDÜLÜ KAZANDIN! 🎉")
+        st.write("### 🎁 Ödülün:")
+        st.info("Bu hafta sonu istediğin yere gidiyoruz / İstediğin o şeyi alıyoruz! (Ekran görüntüsünü al ve bana at)")
+        
+        # Oyunu sıfırlama butonu
+        if st.button("Tekrar Oyna"):
+            st.session_state.jackpot = False
+            st.session_state.spin_count = 0
+            st.experimental_rerun()
+            
+    else:
+        messages = [
+            "Az kaldı, tekrar dene!",
+            "Makine ısınmaya başladı...",
+            "Şansın dönmek üzere, pes etme!",
+            "Benim aşkım kadar büyük bir ikramiye bu, kolay çıkmaz :)"
+        ]
+        st.warning(random.choice(messages))
 
-st.caption("Matematikte buna 'Kardiyoid' deniyor, bende ise sadece 'SEN'.")
+st.write("---")
+st.caption("Powered by Your Python Developer Boyfriend 🐍")
