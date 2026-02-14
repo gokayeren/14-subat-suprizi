@@ -75,7 +75,7 @@ if spin_btn:
             "Az kaldı canım, tekrar dene!",
             "Bir kez daha dene bebeğim...",
             "Pes etme bitanem, olucak :)",
-            "Benim aşkım kadar büyük bir ikramiye bu, son kez dene!"
+            "Aşkım tekrar dene!"
         ]
         st.warning(random.choice(messages))
 
